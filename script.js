@@ -8,6 +8,8 @@ document.addEventListener("DOMContentLoaded", function () {
       const username = document.getElementById("login-username").value;
       const password = document.getElementById("login-password").value;
       const stored = JSON.parse(localStorage.getItem("users")) || {};
+
+      // Validasi login
       if (stored[username] && stored[username] === password) {
         localStorage.setItem("loggedUser", username);
         window.location.href = "dashboard.html";
@@ -24,10 +26,12 @@ document.addEventListener("DOMContentLoaded", function () {
       const username = document.getElementById("reg-username").value;
       const password = document.getElementById("reg-password").value;
       const stored = JSON.parse(localStorage.getItem("users")) || {};
-      if (username in stored) {
+
+      if (stored[username]) {
         alert("Username sudah terdaftar.");
         return;
       }
+
       stored[username] = password;
       localStorage.setItem("users", JSON.stringify(stored));
       alert("Registrasi berhasil! Silakan login.");
@@ -47,11 +51,13 @@ document.addEventListener("DOMContentLoaded", function () {
       window.location.href = "login.html";
     });
 
+    // Tab navigasi
     const tabs = document.querySelectorAll(".tab-btn");
     tabs.forEach(tab => {
       tab.addEventListener("click", () => {
         tabs.forEach(t => t.classList.remove("active"));
         tab.classList.add("active");
+
         const id = tab.getAttribute("data-tab");
         document.querySelectorAll(".tab-content").forEach(c => c.style.display = "none");
         document.getElementById("tab-" + id).style.display = "block";
@@ -63,6 +69,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const successMsg = document.getElementById("add-success");
     const categoryInput = document.getElementById("todo-category");
     const extraInput = document.getElementById("todo-extra");
+    const priorityInput = document.getElementById("todo-priority"); // Ambil elemen prioritas
 
     const todos = JSON.parse(localStorage.getItem(`todos-${user}`)) || [];
 
@@ -78,26 +85,20 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const renderTodos = () => {
       todoList.innerHTML = "";
-      const renderTodos = () => {
-        todoList.innerHTML = "";
-      
-        if (todos.length === 0) {
-          todoList.innerHTML = "<p>Belum ada to-do. Tambahkan dulu ya!</p>";
-          return;
-        }
-        todos.sort((a, b) => new Date(a.deadline) - new Date(b.deadline));
       todos.forEach((t, i) => {
         const li = document.createElement("li");
         li.className = t.completed ? "todo-completed" : "";
 
+        const priorityClass = t.priority?.toLowerCase() || "rendah";
+
         li.innerHTML = `
           <strong>${t.title}</strong> (${t.category})<br>
           Deadline: ${t.deadline}<br>
-          Prioritas: <span class="priority">${t.priority}</span><br>
-          ${t.category === "tugas" ? "Link: " : "Lokasi: "}${t.extra}
+          ${t.category === "tugas" ? "Link: " : "Lokasi: "}${t.extra}<br>
+          Prioritas: <span class="priority ${priorityClass}">${t.priority}</span>
           <div class="todo-actions">
-             <button class="done-btn">${t.completed ? "Belum Selesai" : "Selesai"}</button>
-             <button class="delete-btn">Hapus</button>
+            <button class="done-btn">${t.completed ? "Belum Selesai" : "Selesai"}</button>
+            <button class="delete-btn">Hapus</button>
           </div>
         `;
 
@@ -108,13 +109,10 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         li.querySelector(".delete-btn").addEventListener("click", () => {
-          const confirmDelete = confirm("Yakin ingin menghapus tugas ini?");
-          if (confirmDelete) {
-            todos.splice(i, 1);
-            localStorage.setItem(`todos-${user}`, JSON.stringify(todos));
-            renderTodos();
-          }
-        });        
+          todos.splice(i, 1);
+          localStorage.setItem(`todos-${user}`, JSON.stringify(todos));
+          renderTodos();
+        });
 
         todoList.appendChild(li);
       });
@@ -124,34 +122,22 @@ document.addEventListener("DOMContentLoaded", function () {
 
     todoForm.addEventListener("submit", function (e) {
       e.preventDefault();
-      const title = document.getElementById("todo-title").value.trim();
-      const category = categoryInput.value;
-      const extra = extraInput.value.trim();
-      const deadline = document.getElementById("todo-deadline").value;
-      const priority = document.getElementById("todo-priority").value; // ditambahkan nanti
-
-  if (!title || !category || !extra || !deadline || !priority) {
-    alert("Mohon lengkapi semua data tugas.");
-    return;
-  }
-
-  const newTask = {
-    title,
-    category,
-    extra,
-    deadline,
-    completed: false,
-    priority, // tambahkan prioritas
-  };
-
-  todos.push(newTask);
-  localStorage.setItem(`todos-${user}`, JSON.stringify(todos));
-  successMsg.style.display = "block";
-  renderTodos();
-  todoForm.reset();
-  setTimeout(() => {
-    successMsg.style.display = "none";
-  }, 2000);
-});
+      const newTask = {
+        title: document.getElementById("todo-title").value,
+        category: categoryInput.value,
+        extra: extraInput.value,
+        deadline: document.getElementById("todo-deadline").value,
+        priority: priorityInput.value, // Ambil nilai prioritas
+        completed: false,
+      };
+      todos.push(newTask);
+      localStorage.setItem(`todos-${user}`, JSON.stringify(todos));
+      successMsg.style.display = "block";
+      renderTodos();
+      todoForm.reset();
+      setTimeout(() => {
+        successMsg.style.display = "none";
+      }, 2000);
+    });
   }
 });
