@@ -29,6 +29,13 @@
       </select>
       <input type="text" id="todo-extra" placeholder="assignment submission/location" required />
       <input type="date" id="todo-deadline" required />
+      <label for="todo-priority">Prioritas:</label>
+      <select id="todo-priority" required>
+        <option value="">-- Pilih Prioritas --</option>
+        <option value="Rendah">Rendah</option>
+        <option value="Sedang">Sedang</option>
+        <option value="Tinggi">Tinggi</option>
+      </select>
       <button type="submit">Tambahkan</button>
     </form>
     <div id="add-success" class="success-msg" style="display:none;">Berhasil ditambahkan!</div>

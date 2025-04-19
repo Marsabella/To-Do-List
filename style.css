@@ -210,3 +210,18 @@ form button:hover {
   text-decoration: line-through;
   opacity: 0.6;
 }
+.priority {
+  font-weight: bold;
+}
+
+.priority.rendah {
+  color: green;
+}
+
+.priority.sedang {
+  color: orange;
+}
+
+.priority.tinggi {
+  color: red;
+}

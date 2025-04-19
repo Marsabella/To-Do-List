@@ -93,10 +93,11 @@ document.addEventListener("DOMContentLoaded", function () {
         li.innerHTML = `
           <strong>${t.title}</strong> (${t.category})<br>
           Deadline: ${t.deadline}<br>
+          Prioritas: <span class="priority">${t.priority}</span><br>
           ${t.category === "tugas" ? "Link: " : "Lokasi: "}${t.extra}
           <div class="todo-actions">
-            <button class="done-btn">${t.completed ? "Belum Selesai" : "Selesai"}</button>
-            <button class="delete-btn">Hapus</button>
+             <button class="done-btn">${t.completed ? "Belum Selesai" : "Selesai"}</button>
+             <button class="delete-btn">Hapus</button>
           </div>
         `;
 
