@@ -78,6 +78,14 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const renderTodos = () => {
       todoList.innerHTML = "";
+      const renderTodos = () => {
+        todoList.innerHTML = "";
+      
+        if (todos.length === 0) {
+          todoList.innerHTML = "<p>Belum ada to-do. Tambahkan dulu ya!</p>";
+          return;
+        }
+        todos.sort((a, b) => new Date(a.deadline) - new Date(b.deadline));
       todos.forEach((t, i) => {
         const li = document.createElement("li");
         li.className = t.completed ? "todo-completed" : "";
@@ -99,10 +107,13 @@ document.addEventListener("DOMContentLoaded", function () {
         });
 
         li.querySelector(".delete-btn").addEventListener("click", () => {
-          todos.splice(i, 1);
-          localStorage.setItem(`todos-${user}`, JSON.stringify(todos));
-          renderTodos();
-        });
+          const confirmDelete = confirm("Yakin ingin menghapus tugas ini?");
+          if (confirmDelete) {
+            todos.splice(i, 1);
+            localStorage.setItem(`todos-${user}`, JSON.stringify(todos));
+            renderTodos();
+          }
+        });        
 
         todoList.appendChild(li);
       });
@@ -112,21 +123,34 @@ document.addEventListener("DOMContentLoaded", function () {
 
     todoForm.addEventListener("submit", function (e) {
       e.preventDefault();
-      const newTask = {
-        title: document.getElementById("todo-title").value,
-        category: categoryInput.value,
-        extra: extraInput.value,
-        deadline: document.getElementById("todo-deadline").value,
-        completed: false,
-      };
-      todos.push(newTask);
-      localStorage.setItem(`todos-${user}`, JSON.stringify(todos));
-      successMsg.style.display = "block";
-      renderTodos();
-      todoForm.reset();
-      setTimeout(() => {
-        successMsg.style.display = "none";
-      }, 2000);
-    });
+      const title = document.getElementById("todo-title").value.trim();
+      const category = categoryInput.value;
+      const extra = extraInput.value.trim();
+      const deadline = document.getElementById("todo-deadline").value;
+      const priority = document.getElementById("todo-priority").value; // ditambahkan nanti
+
+  if (!title || !category || !extra || !deadline || !priority) {
+    alert("Mohon lengkapi semua data tugas.");
+    return;
+  }
+
+  const newTask = {
+    title,
+    category,
+    extra,
+    deadline,
+    completed: false,
+    priority, // tambahkan prioritas
+  };
+
+  todos.push(newTask);
+  localStorage.setItem(`todos-${user}`, JSON.stringify(todos));
+  successMsg.style.display = "block";
+  renderTodos();
+  todoForm.reset();
+  setTimeout(() => {
+    successMsg.style.display = "none";
+  }, 2000);
+});
   }
 });
