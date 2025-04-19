@@ -36,62 +36,100 @@ document.addEventListener("DOMContentLoaded", function () {
     });
   }
 
-  // Dashboard
-  if (window.location.pathname.includes("dashboard.html")) {
-    if (!user) {
-      window.location.href = "login.html";
-    }
-
-    document.getElementById("user-greeting").innerText = "Halo, " + user;
-    document.getElementById("logout-btn").addEventListener("click", () => {
-      localStorage.removeItem("loggedUser");
-      window.location.href = "login.html";
-    });
-
-    const tabs = document.querySelectorAll(".tab-btn");
-    tabs.forEach(tab => {
-      tab.addEventListener("click", () => {
-        tabs.forEach(t => t.classList.remove("active"));
-        tab.classList.add("active");
-        const id = tab.getAttribute("data-tab");
-        document.querySelectorAll(".tab-content").forEach(c => c.style.display = "none");
-        document.getElementById("tab-" + id).style.display = "block";
+    // Dashboard
+    if (window.location.pathname.includes("dashboard.html")) {
+      if (!user) {
+        window.location.href = "login.html";
+      }
+  
+      document.getElementById("user-greeting").innerText = "Halo, " + user;
+      document.getElementById("logout-btn").addEventListener("click", () => {
+        localStorage.removeItem("loggedUser");
+        window.location.href = "login.html";
       });
-    });
-
-    const todoForm = document.getElementById("todo-form");
-    const todoList = document.getElementById("todo-list");
-    const successMsg = document.getElementById("add-success");
-
-    const todos = JSON.parse(localStorage.getItem(`todos-${user}`)) || [];
-
-    const renderTodos = () => {
-      todoList.innerHTML = "";
-      todos.forEach((t, i) => {
-        const li = document.createElement("li");
-        li.innerText = `${t.name} (${t.type}) - Deadline: ${t.deadline}, Kumpul: ${t.submission}`;
-        todoList.appendChild(li);
+  
+      const tabs = document.querySelectorAll(".tab-btn");
+      tabs.forEach(tab => {
+        tab.addEventListener("click", () => {
+          tabs.forEach(t => t.classList.remove("active"));
+          tab.classList.add("active");
+          const id = tab.getAttribute("data-tab");
+          document.querySelectorAll(".tab-content").forEach(c => c.style.display = "none");
+          document.getElementById("tab-" + id).style.display = "block";
+        });
       });
-    };
-
-    renderTodos();
-
-    todoForm.addEventListener("submit", function (e) {
-      e.preventDefault();
-      const task = {
-        name: document.getElementById("task-name").value,
-        deadline: document.getElementById("deadline-date").value,
-        submission: document.getElementById("submission-date").value,
-        type: document.getElementById("task-type").value,
+  
+      const todoForm = document.getElementById("todo-form");
+      const todoList = document.getElementById("todo-list");
+      const successMsg = document.getElementById("add-success");
+      const categoryInput = document.getElementById("todo-category");
+      const extraInput = document.getElementById("todo-extra");
+  
+      const todos = JSON.parse(localStorage.getItem(`todos-${user}`)) || [];
+  
+      // Placeholder dinamis untuk Link / Lokasi
+      categoryInput.addEventListener("change", () => {
+        if (categoryInput.value === "tugas") {
+          extraInput.placeholder = "Link Pengumpulan";
+        } else if (categoryInput.value === "meeting") {
+          extraInput.placeholder = "Lokasi Meeting";
+        } else {
+          extraInput.placeholder = "Link/Lokasi";
+        }
+      });
+  
+      const renderTodos = () => {
+        todoList.innerHTML = "";
+        todos.forEach((t, i) => {
+          const li = document.createElement("li");
+          li.className = t.completed ? "todo-completed" : "";
+  
+          li.innerHTML = `
+            <strong>${t.title}</strong> (${t.category})<br>
+            Deadline: ${t.deadline}<br>
+            ${t.category === "tugas" ? "Link: " : "Lokasi: "}${t.extra}
+            <div class="todo-actions">
+              <button class="done-btn">${t.completed ? "Belum Selesai" : "Selesai"}</button>
+              <button class="delete-btn">Hapus</button>
+            </div>
+          `;
+  
+          // Selesai / Belum
+          li.querySelector(".done-btn").addEventListener("click", () => {
+            todos[i].completed = !todos[i].completed;
+            localStorage.setItem(`todos-${user}`, JSON.stringify(todos));
+            renderTodos();
+          });
+  
+          // Hapus
+          li.querySelector(".delete-btn").addEventListener("click", () => {
+            todos.splice(i, 1);
+            localStorage.setItem(`todos-${user}`, JSON.stringify(todos));
+            renderTodos();
+          });
+  
+          todoList.appendChild(li);
+        });
       };
-      todos.push(task);
-      localStorage.setItem(`todos-${user}`, JSON.stringify(todos));
-      successMsg.style.display = "block";
+  
       renderTodos();
-      todoForm.reset();
-      setTimeout(() => {
-        successMsg.style.display = "none";
-      }, 2000);
-    });
-  }
-});
+  
+      todoForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const newTask = {
+          title: document.getElementById("todo-title").value,
+          category: categoryInput.value,
+          extra: extraInput.value,
+          deadline: document.getElementById("todo-deadline").value,
+          completed: false,
+        };
+        todos.push(newTask);
+        localStorage.setItem(`todos-${user}`, JSON.stringify(todos));
+        successMsg.style.display = "block";
+        renderTodos();
+        todoForm.reset();
+        setTimeout(() => {
+          successMsg.style.display = "none";
+        }, 2000);
+      });
+    }  

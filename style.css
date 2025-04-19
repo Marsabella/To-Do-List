@@ -111,3 +111,39 @@ form button:hover {
   border-radius: 8px;
   margin-bottom: 10px;
 }
+.todo-actions {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+}
+
+.todo-actions button {
+  padding: 6px 10px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+.todo-actions .done-btn {
+  background-color: #28a745;
+  color: white;
+}
+
+.todo-actions .done-btn:hover {
+  background-color: #218838;
+}
+
+.todo-actions .delete-btn {
+  background-color: #dc3545;
+  color: white;
+}
+
+.todo-actions .delete-btn:hover {
+  background-color: #c82333;
+}
+
+.todo-completed {
+  text-decoration: line-through;
+  opacity: 0.6;
+}
