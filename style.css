@@ -2,7 +2,7 @@ body {
   font-family: 'Segoe UI', sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #f7f9fc;
+  background-color: #FFEFD3; /* krem muda */
 }
 
 .auth-container {
@@ -18,14 +18,15 @@ body {
   width: 100%;
   margin-bottom: 10px;
   padding: 10px;
-  border: 1px solid #ccc;
+  border: 1px solid #adb6c4;
   border-radius: 6px;
+  background-color: #fffefd;
 }
 
 .auth-container button {
   width: 100%;
   padding: 10px;
-  background-color: #007bff;
+  background-color: #294C60; /* biru gelap sedang */
   color: white;
   border: none;
   border-radius: 6px;
@@ -33,22 +34,22 @@ body {
 }
 
 .auth-container button:hover {
-  background-color: #0056b3;
+  background-color: #001B2E; /* navy gelap */
 }
 
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #007bff;
+  background-color: #001B2E;
   padding: 15px 30px;
-  color: white;
+  color: #FFEFD3;
 }
 
 .tabs {
   display: flex;
   justify-content: center;
-  background-color: #e0e0e0;
+  background-color: #ADB6C4;
   padding: 10px;
 }
 
@@ -56,13 +57,14 @@ body {
   margin: 0 10px;
   padding: 10px 20px;
   border: none;
-  background-color: #ccc;
+  background-color: #FFC49B; /* peach */
   cursor: pointer;
   border-radius: 6px;
+  color: #001B2E;
 }
 
 .tab-btn.active {
-  background-color: #007bff;
+  background-color: #294C60;
   color: white;
 }
 
@@ -75,27 +77,30 @@ body {
   box-shadow: 0 0 10px rgba(0,0,0,0.1);
 }
 
-form input, form select, form button {
+form input,
+form select,
+form button {
   width: 100%;
   margin-bottom: 15px;
   padding: 10px;
   border-radius: 6px;
-  border: 1px solid #ccc;
+  border: 1px solid #adb6c4;
+  background-color: #fffefd;
 }
 
 form button {
-  background-color: #28a745;
+  background-color: #294C60;
   color: white;
   border: none;
   cursor: pointer;
 }
 
 form button:hover {
-  background-color: #218838;
+  background-color: #001B2E;
 }
 
 .success-msg {
-  color: green;
+  color: #28a745;
   font-weight: bold;
   text-align: center;
 }
@@ -106,11 +111,13 @@ form button:hover {
 }
 
 #todo-list li {
-  background-color: #f1f1f1;
+  background-color: #FFEFD3;
   padding: 10px;
   border-radius: 8px;
   margin-bottom: 10px;
+  border-left: 6px solid #294C60;
 }
+
 .todo-actions {
   margin-top: 10px;
   display: flex;
