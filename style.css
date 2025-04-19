@@ -3,6 +3,7 @@ body {
   margin: 0;
   padding: 0;
   background-color: #C9E4CA;
+  color: #364958;
 }
 
 .auth-container {
@@ -21,6 +22,7 @@ body {
   border: 1px solid #87BBA2;
   border-radius: 6px;
   background-color: #f9f9f9;
+  color: #364958;
 }
 
 .auth-container button {
@@ -86,6 +88,7 @@ form button {
   border-radius: 6px;
   border: 1px solid #87BBA2;
   background-color: #f9f9f9;
+  color: #364958;
 }
 
 form button {
