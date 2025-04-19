@@ -13,25 +13,25 @@
   </nav>
 
   <div class="tabs">
-    <button class="tab-btn active" data-tab="new">+ New To-Do</button>
+    <button class="tab-btn active" data-tab="new">New To-Do</button>
     <button class="tab-btn" data-tab="list">To-Do List</button>
   </div>
 
   <!-- Form Tambah To-Do -->
   <div class="tab-content" id="tab-new">
-    <h2>Tambah Tugas Baru</h2>
+    <h2>New To Do List</h2>
     <form id="todo-form">
-      <input type="text" id="todo-title" placeholder="Nama Tugas" required />
+      <input type="text" id="todo-title" placeholder="Title" required />
       <select id="todo-category" required>
         <option value="">Pilih Kategori</option>
         <option value="tugas">Tugas</option>
         <option value="meeting">Meeting</option>
       </select>
-      <input type="text" id="todo-extra" placeholder="Link/Lokasi" required />
+      <input type="text" id="todo-extra" placeholder="assignment submission/location" required />
       <input type="date" id="todo-deadline" required />
       <button type="submit">Tambahkan</button>
     </form>
-    <div id="add-success" class="success-msg" style="display:none;">Tugas berhasil ditambahkan!</div>
+    <div id="add-success" class="success-msg" style="display:none;">Berhasil ditambahkan!</div>
   </div>
 
   <!-- Daftar To-Do -->

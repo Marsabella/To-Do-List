@@ -1,18 +1,17 @@
-/* ====== Global Setup ====== */
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap');
 
 body {
-  font-family: 'Poppins', sans-serif;
+  font-family: 'Inter', sans-serif;
   margin: 0;
   padding: 0;
   background-color: #C9E4CA;
   color: #364958;
-  transition: background-color 0.5s ease;
+  line-height: 1.6;
 }
 
-/* ====== Reusable Effects ====== */
+/* ===== Smooth Utility ===== */
 .fade-in {
-  animation: fadeIn 0.8s ease forwards;
+  animation: fadeIn 0.6s ease-out forwards;
 }
 
 @keyframes fadeIn {
@@ -20,143 +19,157 @@ body {
   to { opacity: 1; transform: translateY(0); }
 }
 
-button:hover, .tab-btn:hover {
-  transform: scale(1.05);
-  transition: all 0.3s ease;
-}
-
 input:focus, select:focus {
-  border-color: #55828B;
   outline: none;
-  box-shadow: 0 0 0 2px rgba(85, 130, 139, 0.2);
+  box-shadow: 0 0 0 3px rgba(85, 130, 139, 0.2);
+  border-color: #55828B;
 }
 
-/* ====== Auth Container ====== */
+/* ===== Navbar ===== */
+.navbar {
+  background-color: #364958;
+  padding: 16px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  font-size: 18px;
+  font-weight: 600;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+/* ===== Auth Container ===== */
 .auth-container {
   max-width: 400px;
   margin: 80px auto;
-  background: rgba(255, 255, 255, 0.8);
-  padding: 30px;
-  border-radius: 16px;
-  box-shadow: 0 8px 20px rgba(0,0,0,0.1);
-  backdrop-filter: blur(6px);
+  background: transparent;
+  padding: 30px 20px;
+  border-radius: 24px;
+  backdrop-filter: blur(8px);
   animation: fadeIn 1s ease;
 }
 
 .auth-container input {
   width: 100%;
-  margin-bottom: 12px;
-  padding: 12px;
-  border: 1px solid #87BBA2;
-  border-radius: 10px;
-  background-color: #f9f9f9;
+  margin-bottom: 15px;
+  padding: 14px 16px;
+  border: none;
+  border-radius: 999px;
+  background-color: #ffffffcc;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  transition: 0.2s;
 }
 
 .auth-container button {
   width: 100%;
-  padding: 12px;
+  padding: 14px;
   background-color: #55828B;
   color: white;
   border: none;
-  border-radius: 10px;
+  border-radius: 999px;
   cursor: pointer;
   font-weight: 600;
+  transition: background-color 0.3s ease;
 }
 
-/* ====== Navbar ====== */
-.navbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  background-color: #364958;
-  padding: 18px 40px;
-  color: white;
-  font-size: 18px;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.1);
+.auth-container button:hover {
+  background-color: #3B6064;
 }
 
-/* ====== Tabs ====== */
+/* ===== Tabs ===== */
 .tabs {
   display: flex;
   justify-content: center;
-  background-color: #87BBA2;
-  padding: 10px;
+  padding: 16px;
+  gap: 12px;
 }
 
 .tab-btn {
-  margin: 0 10px;
   padding: 10px 24px;
+  border-radius: 999px;
   border: none;
-  background-color: #C9E4CA;
-  cursor: pointer;
-  border-radius: 10px;
+  background-color: #87BBA2;
+  color: white;
   font-weight: 500;
-  color: #364958;
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+.tab-btn:hover {
+  background-color: #55828B;
 }
 
 .tab-btn.active {
-  background-color: #55828B;
-  color: white;
+  background-color: #3B6064;
 }
 
-/* ====== Tab Content ====== */
+/* ===== Content Area ===== */
 .tab-content {
-  max-width: 650px;
-  margin: 30px auto;
-  background-color: white;
-  padding: 24px;
-  border-radius: 16px;
-  box-shadow: 0 6px 18px rgba(0,0,0,0.08);
+  max-width: 700px;
+  margin: 40px auto;
+  background-color: #ffffffb0;
+  padding: 40px;
+  border-radius: 32px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.08);
   animation: fadeIn 1s ease;
 }
 
-/* ====== Form Styling ====== */
-form input,
-form select,
-form button {
+/* ===== Forms ===== */
+form input, form select {
   width: 100%;
-  margin-bottom: 16px;
-  padding: 12px;
-  border-radius: 10px;
-  border: 1px solid #87BBA2;
-  background-color: #fefefe;
+  margin-bottom: 18px;
+  padding: 14px;
+  border-radius: 999px;
+  border: none;
+  background-color: #fff;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.05);
 }
 
 form button {
   background-color: #55828B;
   color: white;
   border: none;
+  padding: 14px;
+  border-radius: 999px;
+  width: 100%;
   font-weight: 600;
+  transition: background-color 0.3s;
 }
 
 form button:hover {
   background-color: #3B6064;
 }
 
+/* ===== Success Message ===== */
 .success-msg {
   color: #3B6064;
   font-weight: bold;
   text-align: center;
+  margin-top: 16px;
 }
 
-/* ====== To-Do List ====== */
+/* ===== To-Do List ===== */
 #todo-list {
   list-style: none;
   padding: 0;
 }
 
 #todo-list li {
-  background-color: #C9E4CA;
-  padding: 14px;
-  border-radius: 10px;
-  margin-bottom: 12px;
-  border-left: 6px solid #55828B;
-  transition: all 0.3s ease;
+  background-color: #87BBA2;
+  padding: 18px 20px;
+  border-radius: 24px;
+  margin-bottom: 16px;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  transition: 0.3s ease;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.08);
 }
 
 #todo-list li:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+  transform: translateY(-4px);
 }
 
 .todo-actions {
@@ -166,21 +179,22 @@ form button:hover {
 }
 
 .todo-actions button {
-  padding: 6px 12px;
+  padding: 8px 14px;
   border: none;
-  border-radius: 8px;
-  cursor: pointer;
+  border-radius: 999px;
   font-size: 14px;
-  transition: all 0.2s ease;
+  cursor: pointer;
+  font-weight: 500;
+  transition: 0.2s ease;
 }
 
 .todo-actions .done-btn {
-  background-color: #87BBA2;
+  background-color: #3B6064;
   color: white;
 }
 
 .todo-actions .done-btn:hover {
-  background-color: #3B6064;
+  background-color: #364958;
 }
 
 .todo-actions .delete-btn {
