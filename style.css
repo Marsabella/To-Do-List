@@ -2,7 +2,7 @@ body {
   font-family: 'Segoe UI', sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #FFEFD3; /* krem muda */
+  background-color: #C9E4CA;
 }
 
 .auth-container {
@@ -18,15 +18,15 @@ body {
   width: 100%;
   margin-bottom: 10px;
   padding: 10px;
-  border: 1px solid #adb6c4;
+  border: 1px solid #87BBA2;
   border-radius: 6px;
-  background-color: #fffefd;
+  background-color: #f9f9f9;
 }
 
 .auth-container button {
   width: 100%;
   padding: 10px;
-  background-color: #294C60; /* biru gelap sedang */
+  background-color: #55828B;
   color: white;
   border: none;
   border-radius: 6px;
@@ -34,22 +34,22 @@ body {
 }
 
 .auth-container button:hover {
-  background-color: #001B2E; /* navy gelap */
+  background-color: #3B6064;
 }
 
 .navbar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #001B2E;
+  background-color: #364958;
   padding: 15px 30px;
-  color: #FFEFD3;
+  color: white;
 }
 
 .tabs {
   display: flex;
   justify-content: center;
-  background-color: #ADB6C4;
+  background-color: #87BBA2;
   padding: 10px;
 }
 
@@ -57,14 +57,14 @@ body {
   margin: 0 10px;
   padding: 10px 20px;
   border: none;
-  background-color: #FFC49B; /* peach */
+  background-color: #C9E4CA;
   cursor: pointer;
   border-radius: 6px;
-  color: #001B2E;
+  color: #364958;
 }
 
 .tab-btn.active {
-  background-color: #294C60;
+  background-color: #55828B;
   color: white;
 }
 
@@ -84,23 +84,23 @@ form button {
   margin-bottom: 15px;
   padding: 10px;
   border-radius: 6px;
-  border: 1px solid #adb6c4;
-  background-color: #fffefd;
+  border: 1px solid #87BBA2;
+  background-color: #f9f9f9;
 }
 
 form button {
-  background-color: #294C60;
+  background-color: #55828B;
   color: white;
   border: none;
   cursor: pointer;
 }
 
 form button:hover {
-  background-color: #001B2E;
+  background-color: #3B6064;
 }
 
 .success-msg {
-  color: #28a745;
+  color: #3B6064;
   font-weight: bold;
   text-align: center;
 }
@@ -111,11 +111,11 @@ form button:hover {
 }
 
 #todo-list li {
-  background-color: #FFEFD3;
+  background-color: #C9E4CA;
   padding: 10px;
   border-radius: 8px;
   margin-bottom: 10px;
-  border-left: 6px solid #294C60;
+  border-left: 6px solid #55828B;
 }
 
 .todo-actions {
@@ -133,21 +133,21 @@ form button:hover {
 }
 
 .todo-actions .done-btn {
-  background-color: #28a745;
+  background-color: #87BBA2;
   color: white;
 }
 
 .todo-actions .done-btn:hover {
-  background-color: #218838;
+  background-color: #3B6064;
 }
 
 .todo-actions .delete-btn {
-  background-color: #dc3545;
+  background-color: #364958;
   color: white;
 }
 
 .todo-actions .delete-btn:hover {
-  background-color: #c82333;
+  background-color: #3B6064;
 }
 
 .todo-completed {
