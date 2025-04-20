@@ -1,6 +1,29 @@
-<h2>Reset Password</h2>
-<input type="text" id="fp-username" placeholder="Username">
-<input type="date" id="fp-dob" placeholder="Tanggal Lahir">
-<input type="password" id="fp-newpass" placeholder="Password Baru">
-<input type="password" id="fp-newpass2" placeholder="Ulangi Password Baru">
-<button id="reset-btn">Reset Password</button>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Reset Password</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+  <div class="auth-container">
+    <h2>Reset Password</h2>
+    <input type="text" id="reset-username" placeholder="Username" />
+    <input type="date" id="reset-dob" placeholder="Tanggal Lahir" />
+    
+    <div class="password-group">
+      <input type="password" id="reset-password" placeholder="Password Baru" />
+      <span class="toggle-password">👁️</span>
+    </div>
+    <div class="password-group">
+      <input type="password" id="reset-password2" placeholder="Ulangi Password Baru" />
+      <span class="toggle-password">👁️</span>
+    </div>
+    
+    <button id="forgot-btn">Reset Password</button>
+    <p><a href="login.html">Kembali ke Login</a></p>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
