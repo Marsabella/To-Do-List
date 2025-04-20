@@ -382,6 +382,7 @@ form button:hover {
   margin-left: 8px;
   display: none;
   font-weight: bold;
+  color: #364958;
 }
 
 #logout-button:hover #logout-text {
