@@ -1,4 +1,3 @@
-/* script.js versi localStorage (tanpa Firebase) */
 $(document).ready(function () {
   const user = localStorage.getItem("loggedUser");
 
