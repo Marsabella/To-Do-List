@@ -38,43 +38,60 @@ $(document).ready(function () {
   $("#login-btn").on("click", function () {
     const username = $("#login-username").val();
     const password = $("#login-password").val();
-    const stored = JSON.parse(localStorage.getItem("users")) || {};
-
-    if (stored[username] && stored[username].password === password) {
-      localStorage.setItem("loggedUser", username);
-      window.location.href = "dashboard.html";
-    } else {
-      alert("Login gagal: Username atau password salah.");
-    }
-  });
+  
+    firebase.database().ref("users/" + username).get().then(snapshot => {
+      if (!snapshot.exists()) {
+        alert("Login gagal: Username tidak ditemukan.");
+        return;
+      }
+  
+      const userData = snapshot.val();
+      if (userData.password === password) {
+        localStorage.setItem("loggedUser", username);
+        window.location.href = "dashboard.html";
+      } else {
+        alert("Login gagal: Password salah.");
+      }
+    }).catch(error => {
+      alert("Terjadi kesalahan: " + error.message);
+    });
+  });  
 
   // ==== REGISTER ====
-  $("#register-btn").on("click", function () {
+  $("#register-btn").on("click", function (e) {
+    e.preventDefault();
     const username = $("#reg-username").val();
     const password = $("#reg-password").val();
     const password2 = $("#reg-password2").val();
     const email = $("#reg-email").val();
     const dob = $("#reg-dob").val();
-
-    const stored = JSON.parse(localStorage.getItem("users")) || {};
-    if (stored[username]) {
-      alert("Username sudah terdaftar.");
-      return;
-    }
+  
     if (password !== password2) {
       alert("Password tidak cocok.");
       return;
     }
-
-    stored[username] = {
-      password,
-      email,
-      dob,
-    };
-    localStorage.setItem("users", JSON.stringify(stored));
-    alert("Registrasi berhasil! Silakan login.");
-    window.location.href = "login.html";
-  });
+  
+    // Cek apakah username sudah ada di Firebase
+    firebase.database().ref("users/" + username).get().then(snapshot => {
+      if (snapshot.exists()) {
+        alert("Username sudah terdaftar.");
+      } else {
+        const userData = {
+          password,
+          email,
+          dob,
+        };
+        firebase.database().ref("users/" + username).set(userData)
+          .then(() => {
+            alert("Registrasi berhasil! Silakan login.");
+            window.location.href = "login.html";
+          })
+          .catch(error => {
+            alert("Gagal menyimpan data: " + error.message);
+          });
+      }
+    });
+  });  
 
   // ==== DASHBOARD ====
   if (window.location.pathname.includes("dashboard.html")) {
@@ -93,7 +110,7 @@ $(document).ready(function () {
       localStorage.removeItem("loggedUser");
       window.location.href = "login.html";
     });
-    
+
     // Tab Navigasi dengan jQuery
     $(".tab-btn").on("click", function () {
       $(".tab-btn").removeClass("active");
