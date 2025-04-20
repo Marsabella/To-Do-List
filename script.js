@@ -3,6 +3,44 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // ===== LOGIN =====
   const loginBtn = document.getElementById("login-btn");
+  // Toggle show/hide password
+const passwordInput = document.getElementById("login-password");
+const togglePassword = document.getElementById("toggle-password");
+if (togglePassword) {
+  togglePassword.addEventListener("click", () => {
+    if (passwordInput.type === "password") {
+      passwordInput.type = "text";
+      togglePassword.textContent = "Sembunyikan";
+    } else {
+      passwordInput.type = "password";
+      togglePassword.textContent = "Lihat";
+    }
+  });
+}
+// ===== LUPA PASSWORD =====
+const forgotBtn = document.getElementById("forgot-btn");
+if (forgotBtn) {
+  forgotBtn.addEventListener("click", () => {
+    const username = prompt("Masukkan username:");
+    const dob = prompt("Masukkan tanggal lahir (YYYY-MM-DD):");
+    const newPass = prompt("Masukkan password baru:");
+    const confirmPass = prompt("Ulangi password baru:");
+
+    const users = JSON.parse(localStorage.getItem("users")) || {};
+    if (!users[username]) {
+      alert("Username tidak ditemukan.");
+    } else if (users[username].dob !== dob) {
+      alert("Tanggal lahir tidak sesuai.");
+    } else if (newPass !== confirmPass) {
+      alert("Password baru tidak cocok.");
+    } else {
+      users[username].password = newPass;
+      localStorage.setItem("users", JSON.stringify(users));
+      alert("Password berhasil diubah.");
+    }
+  });
+}
+
   if (loginBtn) {
     loginBtn.addEventListener("click", () => {
       const username = document.getElementById("login-username").value;
@@ -10,7 +48,7 @@ document.addEventListener("DOMContentLoaded", function () {
       const stored = JSON.parse(localStorage.getItem("users")) || {};
 
       // Validasi login
-      if (stored[username] && stored[username] === password) {
+      if (stored[username] && stored[username].password === password) {
         localStorage.setItem("loggedUser", username);
         window.location.href = "dashboard.html";
       } else {
@@ -25,14 +63,24 @@ document.addEventListener("DOMContentLoaded", function () {
     regBtn.addEventListener("click", () => {
       const username = document.getElementById("reg-username").value;
       const password = document.getElementById("reg-password").value;
+      const password2 = document.getElementById("reg-password2").value;
+      const email = document.getElementById("reg-email").value;
+      const dob = document.getElementById("reg-dob").value;
+  
       const stored = JSON.parse(localStorage.getItem("users")) || {};
-
-      if (stored[username]) {
+      if (username in stored) {
         alert("Username sudah terdaftar.");
         return;
       }
-
-      stored[username] = password;
+      if (password !== password2) {
+        alert("Password tidak cocok.");
+        return;
+      }
+      stored[username] = {
+        password: password,
+        email: email,
+        dob: dob
+      };
       localStorage.setItem("users", JSON.stringify(stored));
       alert("Registrasi berhasil! Silakan login.");
       window.location.href = "login.html";
