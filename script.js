@@ -83,11 +83,17 @@ $(document).ready(function () {
     }
 
     $("#user-greeting").text("Halo, " + user);
-    $("#logout-btn").on("click", function () {
+    $("#logout-button").on("click", function () {
+      $("#logout-confirmation").fadeIn();
+    });
+    $("#confirm-no").on("click", function () {
+      $("#logout-confirmation").fadeOut();
+    });
+    $("#confirm-yes").on("click", function () {
       localStorage.removeItem("loggedUser");
       window.location.href = "login.html";
     });
-
+    
     // Tab Navigasi dengan jQuery
     $(".tab-btn").on("click", function () {
       $(".tab-btn").removeClass("active");

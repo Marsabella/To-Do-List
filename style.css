@@ -355,3 +355,47 @@ form button:hover {
 #done-list li:hover {
   transform: translateY(-4px);
 }
+/* Logout button and confirmation box */
+#logout-wrapper {
+  position: relative;
+  display: inline-block;
+  margin: 20px;
+}
+
+#logout-button {
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  border: none;
+  padding: 10px;
+  border-radius: 50%;
+  transition: all 0.3s ease;
+}
+
+#logout-icon {
+  width: 30px;
+  height: 30px;
+}
+
+#logout-text {
+  margin-left: 8px;
+  display: none;
+  font-weight: bold;
+}
+
+#logout-button:hover #logout-text {
+  display: inline;
+}
+
+#logout-confirmation {
+  display: none;
+  position: absolute;
+  top: 60px;
+  background-color: white;
+  border: 1px solid #ccc;
+  padding: 10px;
+  border-radius: 10px;
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
