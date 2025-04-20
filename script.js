@@ -40,7 +40,7 @@ $(document).ready(function () {
     const username = $("#login-username").val();
     const password = $("#login-password").val();
   
-    firebase.database().ref("users/" + username).get().then(snapshot => {
+    firebase.database().ref("users/" + username).once("value").then(snapshot => {
       if (!snapshot.exists()) {
         alert("Login gagal: Username tidak ditemukan.");
         return;
@@ -71,9 +71,8 @@ $(document).ready(function () {
       alert("Password tidak cocok.");
       return;
     }
-  
     // Cek apakah username sudah ada di Firebase
-    firebase.database().ref("users/" + username).get().then(snapshot => {
+    firebase.database().ref("users/" + username).once("value").then(snapshot => {
       if (snapshot.exists()) {
         alert("Username sudah terdaftar.");
       } else {
@@ -91,7 +90,7 @@ $(document).ready(function () {
             alert("Gagal menyimpan data: " + error.message);
           });
       }
-    });
+    });       
   });  
 
   // ==== DASHBOARD ====
