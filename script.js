@@ -115,6 +115,7 @@ if (forgotBtn) {
 
     const todoForm = document.getElementById("todo-form");
     const todoList = document.getElementById("todo-list");
+    const doneList = document.getElementById("done-list");
     const successMsg = document.getElementById("add-success");
     const categoryInput = document.getElementById("todo-category");
     const extraInput = document.getElementById("todo-extra");
@@ -134,15 +135,20 @@ if (forgotBtn) {
 
     const renderTodos = () => {
       todoList.innerHTML = "";
+      doneList.innerHTML = "";
+    
+      // Urutkan berdasarkan tanggal + waktu terdekat
+      todos.sort((a, b) => new Date(a.date + "T" + a.time) - new Date(b.date + "T" + b.time));
+    
       todos.forEach((t, i) => {
         const li = document.createElement("li");
         li.className = t.completed ? "todo-completed" : "";
-
+    
         const priorityClass = t.priority?.toLowerCase() || "rendah";
-
+    
         li.innerHTML = `
           <strong>${t.title}</strong> (${t.category})<br>
-          Deadline: ${t.deadline}<br>
+          Deadline: ${t.date} ${t.time}<br>
           ${t.category === "tugas" ? "Link: " : "Lokasi: "}${t.extra}<br>
           Prioritas: <span class="priority ${priorityClass}">${t.priority}</span>
           <div class="todo-actions">
@@ -150,35 +156,44 @@ if (forgotBtn) {
             <button class="delete-btn">Hapus</button>
           </div>
         `;
-
+    
         li.querySelector(".done-btn").addEventListener("click", () => {
           todos[i].completed = !todos[i].completed;
           localStorage.setItem(`todos-${user}`, JSON.stringify(todos));
           renderTodos();
         });
-
+    
         li.querySelector(".delete-btn").addEventListener("click", () => {
           todos.splice(i, 1);
           localStorage.setItem(`todos-${user}`, JSON.stringify(todos));
           renderTodos();
         });
-
-        todoList.appendChild(li);
+    
+        if (t.completed) {
+          doneList.appendChild(li);
+        } else {
+          todoList.appendChild(li);
+        }
       });
-    };
+    };    
 
     renderTodos();
 
     todoForm.addEventListener("submit", function (e) {
       e.preventDefault();
+      const date = document.getElementById("todo-deadline").value;
+      const time = document.getElementById("todo-time").value;
       const newTask = {
         title: document.getElementById("todo-title").value,
         category: categoryInput.value,
         extra: extraInput.value,
-        deadline: document.getElementById("todo-deadline").value,
-        priority: priorityInput.value, // Ambil nilai prioritas
+        date: date,
+        time: time,
+        deadline: `${date} ${time}`,
+        priority: priorityInput.value,
         completed: false,
       };
+
       todos.push(newTask);
       localStorage.setItem(`todos-${user}`, JSON.stringify(todos));
       successMsg.style.display = "block";

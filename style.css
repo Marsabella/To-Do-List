@@ -325,3 +325,33 @@ form button:hover {
 .priority.tinggi {
   color: red;
 }
+/* ===== Section Heading for Todo & Done ===== */
+.todo-section-title {
+  font-size: 20px;
+  font-weight: 600;
+  margin: 32px 0 16px;
+  color: #364958;
+  text-align: center;
+}
+
+/* ===== Done List Styling ===== */
+#done-list {
+  list-style: none;
+  padding: 0;
+}
+
+#done-list li {
+  background-color: #E9F5DB;
+  color: #364958;
+  padding: 18px 20px;
+  border-radius: 24px;
+  margin-bottom: 16px;
+  display: flex;
+  flex-direction: column;
+  transition: 0.3s ease;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.05);
+}
+
+#done-list li:hover {
+  transform: translateY(-4px);
+}

@@ -29,6 +29,7 @@
       </select>
       <input type="text" id="todo-extra" placeholder="assignment submission/location" required />
       <input type="date" id="todo-deadline" required />
+      <input type="time" id="todo-time" required />
       <label for="todo-priority">Prioritas:</label>
       <select id="todo-priority" required>
         <option value="">-- Pilih Prioritas --</option>
@@ -43,10 +44,12 @@
 
   <!-- Daftar To-Do -->
   <div class="tab-content" id="tab-list" style="display: none;">
-    <h2>Daftar To-Do</h2>
+    <h3 class="todo-section-title">To Do</h3>
     <ul id="todo-list"></ul>
+    
+    <h3 class="todo-section-title">Done</h3>
+    <ul id="done-list"></ul>
   </div>
-
   <script src="script.js"></script>
 </body>
 </html>
