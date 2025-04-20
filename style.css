@@ -25,6 +25,25 @@ input:focus, select:focus {
   border-color: #55828B;
 }
 
+/* ===== Password Toggle ===== */
+.password-wrapper {
+  position: relative;
+}
+
+.password-wrapper input {
+  padding-right: 40px;
+}
+
+.toggle-password {
+  position: absolute;
+  top: 50%;
+  right: 14px;
+  transform: translateY(-50%);
+  cursor: pointer;
+  font-size: 18px;
+  color: #364958;
+}
+
 /* ===== Navbar ===== */
 .navbar {
   background-color: #364958;
@@ -78,6 +97,30 @@ input:focus, select:focus {
   background-color: #3B6064;
 }
 
+/* ===== Auth Titles and Links ===== */
+.auth-title {
+  text-align: center;
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 24px;
+}
+
+.auth-links {
+  text-align: center;
+  margin-top: 16px;
+  font-size: 14px;
+}
+
+.auth-links a {
+  color: #364958;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.auth-links a:hover {
+  text-decoration: underline;
+}
+
 /* ===== Tabs ===== */
 .tabs {
   display: flex;
@@ -115,6 +158,24 @@ input:focus, select:focus {
   box-shadow: 0 8px 24px rgba(0,0,0,0.08);
   animation: fadeIn 1s ease;
 }
+
+/* ===== Forgot Password Page ===== */
+.forgot-container {
+  max-width: 400px;
+  margin: 80px auto;
+  background: transparent;
+  padding: 30px 20px;
+  border-radius: 24px;
+  backdrop-filter: blur(8px);
+  animation: fadeIn 1s ease;
+}
+
+.forgot-container h2 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #364958;
+}
+
 
 /* ===== Forms ===== */
 form input, form select {

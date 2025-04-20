@@ -8,13 +8,20 @@
 </head>
 <body>
   <div class="auth-container">
-    <h2>Login</h2>
+    <h2 class="auth-title">Login</h2>
+
     <input id="login-username" type="text" placeholder="Username" />
-    <input id="login-password" type="password" placeholder="Password" />
-    <input id="show-password" type="checkbox"> Tampilkan Password
+    <div class="password-wrapper">
+      <input id="login-password" type="password" placeholder="Password" />
+      <span class="toggle-password" onclick="togglePassword('login-password', this)">👁️</span>
+    </div>
+
     <button id="login-btn">Login</button>
-    <p>Belum punya akun? <a href="register.html">Daftar di sini</a></p>
-    <p><a href="forgot.html">Lupa Password?</a></p>
+
+    <div class="auth-links">
+      <p>Belum punya akun? <a href="register.html">Daftar di sini</a></p>
+      <p><a href="forgot.html">Lupa Password?</a></p>
+    </div>
   </div>
   <script src="script.js"></script>
 </body>

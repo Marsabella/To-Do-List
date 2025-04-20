@@ -3,20 +3,21 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // ===== LOGIN =====
   const loginBtn = document.getElementById("login-btn");
-  // Toggle show/hide password
-const passwordInput = document.getElementById("login-password");
-const togglePassword = document.getElementById("toggle-password");
-if (togglePassword) {
-  togglePassword.addEventListener("click", () => {
-    if (passwordInput.type === "password") {
-      passwordInput.type = "text";
-      togglePassword.textContent = "Sembunyikan";
+  // Toggle password via icon span
+const toggleIcons = document.querySelectorAll(".toggle-password");
+toggleIcons.forEach((icon) => {
+  icon.addEventListener("click", function () {
+    const inputId = this.previousElementSibling.id;
+    const input = document.getElementById(inputId);
+    if (input.type === "password") {
+      input.type = "text";
+      this.textContent = "🙈";
     } else {
-      passwordInput.type = "password";
-      togglePassword.textContent = "Lihat";
+      input.type = "password";
+      this.textContent = "👁️";
     }
   });
-}
+});
 // ===== LUPA PASSWORD =====
 const forgotBtn = document.getElementById("forgot-btn");
 if (forgotBtn) {
