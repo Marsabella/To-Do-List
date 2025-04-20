@@ -13,7 +13,7 @@
     <input id="login-username" type="text" placeholder="Username" />
     <div class="password-wrapper">
       <input id="login-password" type="password" placeholder="Password" />
-      <span class="toggle-password" onclick="togglePassword('login-password', this)">👁️</span>
+      <span class="toggle-password">👁️</span>
     </div>
 
     <button id="login-btn">Login</button>
@@ -23,20 +23,21 @@
       <p><a href="forgot.html">Lupa Password?</a></p>
     </div>
   </div>
+
+  <!-- Firebase & jQuery -->
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-app-compat.js"></script>
   <script src="https://www.gstatic.com/firebasejs/9.22.2/firebase-database-compat.js"></script>
   <script>
     const firebaseConfig = {
-  apiKey: "AIzaSyBfB4370dwtfQKIuFyGzmp_ZMyuNQapt4Q",
-  authDomain: "to-do-list-717e3.firebaseapp.com",
-  projectId: "to-do-list-717e3",
-  storageBucket: "to-do-list-717e3.appspot.com",
-  messagingSenderId: "630811510637",
-  appId: "1:630811510637:web:1c0d75e50fc1f7c6e57c64",
-  databaseURL: "https://to-do-list-717e3-default-rtdb.asia-southeast1.firebasedatabase.app/"
-};
+      apiKey: "AIzaSyBfB4370dwtfQKIuFyGzmp_ZMyuNQapt4Q",
+      authDomain: "to-do-list-717e3.firebaseapp.com",
+      projectId: "to-do-list-717e3",
+      storageBucket: "to-do-list-717e3.appspot.com",
+      messagingSenderId: "630811510637",
+      appId: "1:630811510637:web:1c0d75e50fc1f7c6e57c64",
+      databaseURL: "https://to-do-list-717e3-default-rtdb.asia-southeast1.firebasedatabase.app/"
+    };
     firebase.initializeApp(firebaseConfig);
-    const db = firebase.database();
   </script>
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
   <script src="script.js"></script>

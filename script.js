@@ -15,25 +15,44 @@ $(document).ready(function () {
   });
 
   // ==== LUPA PASSWORD ====
-  $("#forgot-btn").on("click", function () {
-    const username = prompt("Masukkan username:");
-    const dob = prompt("Masukkan tanggal lahir (YYYY-MM-DD):");
-    const newPass = prompt("Masukkan password baru:");
-    const confirmPass = prompt("Ulangi password baru:");
+ // ==== LUPA PASSWORD (PAKAI FIREBASE) ====
+$("#forgot-btn").on("click", function () {
+  const username = prompt("Masukkan username:");
+  const dob = prompt("Masukkan tanggal lahir (YYYY-MM-DD):");
+  const newPass = prompt("Masukkan password baru:");
+  const confirmPass = prompt("Ulangi password baru:");
 
-    const users = JSON.parse(localStorage.getItem("users")) || {};
-    if (!users[username]) {
+  if (!username || !dob || !newPass || !confirmPass) {
+    alert("Semua field harus diisi.");
+    return;
+  }
+
+  firebase.database().ref("users/" + username).once("value").then(snapshot => {
+    if (!snapshot.exists()) {
       alert("Username tidak ditemukan.");
-    } else if (users[username].dob !== dob) {
-      alert("Tanggal lahir tidak sesuai.");
-    } else if (newPass !== confirmPass) {
-      alert("Password baru tidak cocok.");
-    } else {
-      users[username].password = newPass;
-      localStorage.setItem("users", JSON.stringify(users));
-      alert("Password berhasil diubah.");
+      return;
     }
+
+    const userData = snapshot.val();
+    if (userData.dob !== dob) {
+      alert("Tanggal lahir tidak sesuai.");
+      return;
+    }
+
+    if (newPass !== confirmPass) {
+      alert("Password baru tidak cocok.");
+      return;
+    }
+
+    firebase.database().ref("users/" + username + "/password").set(newPass).then(() => {
+      alert("Password berhasil diubah.");
+    }).catch(error => {
+      alert("Gagal mengubah password: " + error.message);
+    });
+  }).catch(error => {
+    alert("Terjadi kesalahan: " + error.message);
   });
+});
 
   // ==== LOGIN ====
   $("#login-btn").on("click", function () {
