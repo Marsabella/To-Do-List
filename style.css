@@ -121,6 +121,36 @@ input:focus, select:focus {
   text-decoration: underline;
 }
 
+.auth-container h2,
+.auth-container button,
+.auth-container p {
+  text-align: center;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.auth-container button {
+  display: block;
+  margin: 0 auto 16px auto;
+}
+
+.auth-container a {
+  color: #1b4d89;
+  text-decoration: none;
+  font-weight: 600;
+}
+
+.auth-container a:hover {
+  text-decoration: underline;
+}
+
+.auth-container p {
+  font-size: 14px;
+  color: #364958;
+  margin-top: 10px;
+}
+
 /* ===== Tabs ===== */
 .tabs {
   display: flex;
