@@ -1,4 +1,5 @@
 $(document).ready(function () {
+  const db = firebase.database();
   const user = localStorage.getItem("loggedUser");
 
   // ==== TOGGLE PASSWORD ====
