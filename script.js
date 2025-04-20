@@ -1,27 +1,20 @@
-document.addEventListener("DOMContentLoaded", function () {
+$(document).ready(function () {
   const user = localStorage.getItem("loggedUser");
 
-  // ===== LOGIN =====
-  const loginBtn = document.getElementById("login-btn");
-  // Toggle password via icon span
-const toggleIcons = document.querySelectorAll(".toggle-password");
-toggleIcons.forEach((icon) => {
-  icon.addEventListener("click", function () {
-    const inputId = this.previousElementSibling.id;
-    const input = document.getElementById(inputId);
-    if (input.type === "password") {
-      input.type = "text";
-      this.textContent = "🙈";
+  // ==== TOGGLE PASSWORD ====
+  $(".toggle-password").on("click", function () {
+    const input = $(this).prev("input");
+    if (input.attr("type") === "password") {
+      input.attr("type", "text");
+      $(this).text("🙈");
     } else {
-      input.type = "password";
-      this.textContent = "👁️";
+      input.attr("type", "password");
+      $(this).text("👁️");
     }
   });
-});
-// ===== LUPA PASSWORD =====
-const forgotBtn = document.getElementById("forgot-btn");
-if (forgotBtn) {
-  forgotBtn.addEventListener("click", () => {
+
+  // ==== LUPA PASSWORD ====
+  $("#forgot-btn").on("click", function () {
     const username = prompt("Masukkan username:");
     const dob = prompt("Masukkan tanggal lahir (YYYY-MM-DD):");
     const newPass = prompt("Masukkan password baru:");
@@ -40,113 +33,84 @@ if (forgotBtn) {
       alert("Password berhasil diubah.");
     }
   });
-}
 
-  if (loginBtn) {
-    loginBtn.addEventListener("click", () => {
-      const username = document.getElementById("login-username").value;
-      const password = document.getElementById("login-password").value;
-      const stored = JSON.parse(localStorage.getItem("users")) || {};
+  // ==== LOGIN ====
+  $("#login-btn").on("click", function () {
+    const username = $("#login-username").val();
+    const password = $("#login-password").val();
+    const stored = JSON.parse(localStorage.getItem("users")) || {};
 
-      // Validasi login
-      if (stored[username] && stored[username].password === password) {
-        localStorage.setItem("loggedUser", username);
-        window.location.href = "dashboard.html";
-      } else {
-        alert("Login gagal: Username atau password salah.");
-      }
-    });
-  }
+    if (stored[username] && stored[username].password === password) {
+      localStorage.setItem("loggedUser", username);
+      window.location.href = "dashboard.html";
+    } else {
+      alert("Login gagal: Username atau password salah.");
+    }
+  });
 
-  // ===== REGISTER =====
-  const regBtn = document.getElementById("register-btn");
-  if (regBtn) {
-    regBtn.addEventListener("click", () => {
-      const username = document.getElementById("reg-username").value;
-      const password = document.getElementById("reg-password").value;
-      const password2 = document.getElementById("reg-password2").value;
-      const email = document.getElementById("reg-email").value;
-      const dob = document.getElementById("reg-dob").value;
-  
-      const stored = JSON.parse(localStorage.getItem("users")) || {};
-      if (username in stored) {
-        alert("Username sudah terdaftar.");
-        return;
-      }
-      if (password !== password2) {
-        alert("Password tidak cocok.");
-        return;
-      }
-      stored[username] = {
-        password: password,
-        email: email,
-        dob: dob
-      };
-      localStorage.setItem("users", JSON.stringify(stored));
-      alert("Registrasi berhasil! Silakan login.");
-      window.location.href = "login.html";
-    });
-  }
+  // ==== REGISTER ====
+  $("#register-btn").on("click", function () {
+    const username = $("#reg-username").val();
+    const password = $("#reg-password").val();
+    const password2 = $("#reg-password2").val();
+    const email = $("#reg-email").val();
+    const dob = $("#reg-dob").val();
 
-  // ===== DASHBOARD =====
+    const stored = JSON.parse(localStorage.getItem("users")) || {};
+    if (stored[username]) {
+      alert("Username sudah terdaftar.");
+      return;
+    }
+    if (password !== password2) {
+      alert("Password tidak cocok.");
+      return;
+    }
+
+    stored[username] = {
+      password,
+      email,
+      dob,
+    };
+    localStorage.setItem("users", JSON.stringify(stored));
+    alert("Registrasi berhasil! Silakan login.");
+    window.location.href = "login.html";
+  });
+
+  // ==== DASHBOARD ====
   if (window.location.pathname.includes("dashboard.html")) {
     if (!user) {
       window.location.href = "login.html";
     }
 
-    document.getElementById("user-greeting").innerText = "Halo, " + user;
-    document.getElementById("logout-btn").addEventListener("click", () => {
+    $("#user-greeting").text("Halo, " + user);
+    $("#logout-btn").on("click", function () {
       localStorage.removeItem("loggedUser");
       window.location.href = "login.html";
     });
 
-    // Tab navigasi
-    const tabs = document.querySelectorAll(".tab-btn");
-    tabs.forEach(tab => {
-      tab.addEventListener("click", () => {
-        tabs.forEach(t => t.classList.remove("active"));
-        tab.classList.add("active");
+    // Tab Navigasi dengan jQuery
+    $(".tab-btn").on("click", function () {
+      $(".tab-btn").removeClass("active");
+      $(this).addClass("active");
 
-        const id = tab.getAttribute("data-tab");
-        document.querySelectorAll(".tab-content").forEach(c => c.style.display = "none");
-        document.getElementById("tab-" + id).style.display = "block";
-      });
+      $(".tab-content").hide();
+      $("#tab-" + $(this).data("tab")).fadeIn();
     });
-
-    const todoForm = document.getElementById("todo-form");
-    const todoList = document.getElementById("todo-list");
-    const doneList = document.getElementById("done-list");
-    const successMsg = document.getElementById("add-success");
-    const categoryInput = document.getElementById("todo-category");
-    const extraInput = document.getElementById("todo-extra");
-    const priorityInput = document.getElementById("todo-priority"); // Ambil elemen prioritas
 
     const todos = JSON.parse(localStorage.getItem(`todos-${user}`)) || [];
 
-    categoryInput.addEventListener("change", () => {
-      if (categoryInput.value === "tugas") {
-        extraInput.placeholder = "Link Pengumpulan";
-      } else if (categoryInput.value === "meeting") {
-        extraInput.placeholder = "Lokasi Meeting";
-      } else {
-        extraInput.placeholder = "Link/Lokasi";
-      }
-    });
-
     const renderTodos = () => {
-      todoList.innerHTML = "";
-      doneList.innerHTML = "";
-    
-      // Urutkan berdasarkan tanggal + waktu terdekat
+      $("#todo-list").empty();
+      $("#done-list").empty();
+
       todos.sort((a, b) => new Date(a.date + "T" + a.time) - new Date(b.date + "T" + b.time));
-    
+
       todos.forEach((t, i) => {
-        const li = document.createElement("li");
-        li.className = t.completed ? "todo-completed" : "";
-    
-        const priorityClass = t.priority?.toLowerCase() || "rendah";
-    
-        li.innerHTML = `
+        const $li = $("<li>").addClass(t.completed ? "todo-completed" : "");
+
+        const priorityClass = (t.priority || "rendah").toLowerCase();
+
+        $li.html(`
           <strong>${t.title}</strong> (${t.category})<br>
           Deadline: ${t.date} ${t.time}<br>
           ${t.category === "tugas" ? "Link: " : "Lokasi: "}${t.extra}<br>
@@ -155,53 +119,52 @@ if (forgotBtn) {
             <button class="done-btn">${t.completed ? "Belum Selesai" : "Selesai"}</button>
             <button class="delete-btn">Hapus</button>
           </div>
-        `;
-    
-        li.querySelector(".done-btn").addEventListener("click", () => {
+        `);
+
+        $li.find(".done-btn").on("click", function () {
           todos[i].completed = !todos[i].completed;
           localStorage.setItem(`todos-${user}`, JSON.stringify(todos));
           renderTodos();
         });
-    
-        li.querySelector(".delete-btn").addEventListener("click", () => {
+
+        $li.find(".delete-btn").on("click", function () {
           todos.splice(i, 1);
           localStorage.setItem(`todos-${user}`, JSON.stringify(todos));
           renderTodos();
         });
-    
+
         if (t.completed) {
-          doneList.appendChild(li);
+          $("#done-list").append($li);
         } else {
-          todoList.appendChild(li);
+          $("#todo-list").append($li);
         }
       });
-    };    
+    };
 
     renderTodos();
 
-    todoForm.addEventListener("submit", function (e) {
+    $("#todo-category").on("change", function () {
+      const val = $(this).val();
+      const placeholder = val === "tugas" ? "Link Pengumpulan" : val === "meeting" ? "Lokasi Meeting" : "Link/Lokasi";
+      $("#todo-extra").attr("placeholder", placeholder);
+    });
+
+    $("#todo-form").on("submit", function (e) {
       e.preventDefault();
-      const date = document.getElementById("todo-deadline").value;
-      const time = document.getElementById("todo-time").value;
       const newTask = {
-        title: document.getElementById("todo-title").value,
-        category: categoryInput.value,
-        extra: extraInput.value,
-        date: date,
-        time: time,
-        deadline: `${date} ${time}`,
-        priority: priorityInput.value,
+        title: $("#todo-title").val(),
+        category: $("#todo-category").val(),
+        extra: $("#todo-extra").val(),
+        date: $("#todo-deadline").val(),
+        time: $("#todo-time").val(),
+        priority: $("#todo-priority").val(),
         completed: false,
       };
-
       todos.push(newTask);
       localStorage.setItem(`todos-${user}`, JSON.stringify(todos));
-      successMsg.style.display = "block";
+      $("#add-success").fadeIn().delay(2000).fadeOut();
       renderTodos();
-      todoForm.reset();
-      setTimeout(() => {
-        successMsg.style.display = "none";
-      }, 2000);
+      this.reset();
     });
   }
 });
